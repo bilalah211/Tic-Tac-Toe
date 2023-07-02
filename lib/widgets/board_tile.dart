@@ -13,7 +13,7 @@ class BoardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(10),
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
@@ -24,7 +24,7 @@ class BoardTile extends StatelessWidget {
           child: Text(
             playState == PlayState.none ? '' : playState.name.toUpperCase(),
             style: TextStyle(
-              color: PlayState.x == playState ? Colors.green : Colors.red,
+              color: PlayState.x == playState ? Colors.pink : Colors.black,
               fontSize: 52,
             ),
           ),

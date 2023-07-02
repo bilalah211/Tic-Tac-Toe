@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,14 +55,14 @@ class _PlayScreenState extends State<PlayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green.shade100,
+            backgroundColor: Colors.pink.shade100,
             title: const Text('Tic Tac Toe')),
 
         //replay or restart game button
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: FloatingActionButton(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.pink.shade100,
             onPressed: () {
               _currentTurn = PlayState.o;
               _isWinned = false;
@@ -78,13 +79,12 @@ class _PlayScreenState extends State<PlayScreen> {
             SizedBox(height: mq.height * .05),
 
             //for showing the turn (who is playing)
-            ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                    shape: const StadiumBorder(),
-                    minimumSize: Size(mq.width * .5, mq.height * .05),
-                    elevation: 0),
+            Container(
+              height: 45,
+              width: 350,
+              decoration: BoxDecoration(
+                  color: Colors.pink.shade100, borderRadius: BorderRadius.circular(5)),
+              child: Center(
                 child: Text(
                   _isDraw && _isWinned == false
                       ? 'Game Draw'
@@ -92,8 +92,11 @@ class _PlayScreenState extends State<PlayScreen> {
                           ? 'Game Over'
                           : "It's ${_currentTurn.name.toUpperCase()} Turn",
                   style: const TextStyle(
+                    color: Colors.white,
                       fontSize: 25, fontWeight: FontWeight.normal),
-                )),
+                ),
+              ),
+            ),
 
             //for adding some space
             SizedBox(height: mq.height * .04),
@@ -109,26 +112,25 @@ class _PlayScreenState extends State<PlayScreen> {
             AnimatedOpacity(
               opacity: _isWinned || _isDraw ? 1 : 0,
               duration: const Duration(milliseconds: 1500),
-              child: ElevatedButton.icon(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                      shape: const StadiumBorder(),
-                      minimumSize: Size(mq.width * .8, mq.height * .06),
-                      elevation: 0),
-                  icon: Icon(
+              child: Container(
+                child: Column(
+                  children: [
+                    Icon(
+                        _isDraw && _isWinned == false
+                            ? Icons.replay
+                            : Icons.celebration_rounded,
+                        size: 35),
+                    Text(
                       _isDraw && _isWinned == false
-                          ? Icons.replay
-                          : Icons.celebration_rounded,
-                      size: 35),
-                  label: Text(
-                    _isDraw && _isWinned == false
-                        ? 'Tap to Play Again'
-                        : ' Winner: Player ${_currentTurn.name.toUpperCase()}',
-                    style: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.normal),
-                  )),
-            ),
+                          ? 'Tap to Play Again'
+                          : ' Winner: Player ${_currentTurn.name.toUpperCase()}',
+                      style: const TextStyle(color: Colors.green,
+                          fontSize: 25, fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ));
   }
